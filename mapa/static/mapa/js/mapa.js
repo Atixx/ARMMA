@@ -15,7 +15,7 @@ function initmap() {
   var osmUrl='http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
 	//var osmAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
   var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'
-	var osm = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 20, attribution: osmAttrib});
+	var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 5, attribution: osmAttrib});
 
 
 	map.setView(new L.LatLng(-34.735428, -58.390990),4);
