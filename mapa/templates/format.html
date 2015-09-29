@@ -8,11 +8,8 @@
 
     <title>{% block titulo %}ARMMA{% endblock %}</title>
 
-    <script src= "{% static "mapa/js/bootstrap.min.js" %}"></script>
     <script src= "{% static "mapa/js/jquery-2.1.4.min.js" %}"></script>
-    <script src= "{% static "mapa/js/leaflet.js" %}"></script>
-    <script src= "{% static "mapa/js/mapa.js" %}"></script>
-
+    <script src= "{% static "mapa/js/bootstrap.min.js" %}"></script>
 
   </head>
   <body>
@@ -20,9 +17,12 @@
   </body>
   <footer class="footer">
     {% block footer %}
-    <div id="bottom"><p>Copyright &#169;Bascuñan Sebastián Pedro, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015. Ambiente de Realización de Mapas de Mortalidad en Argentina.
-
-Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús. </p>
+    <div id="bottom"><p>Copyright &#169;Bascuñan Sebastián Pedro, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015. Ambiente de Realización de Mapas de Mortalidad en Argentina. Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús. </p>
     {% endblock %}
+
+    {% load staticfiles %}
+    <script src= "{% static "mapa/js/leaflet.js" %}"></script>
+    <script src= "{% static "mapa/js/mapa.js" %}"></script>
+
   </footer>
 </html>
