@@ -7,11 +7,11 @@ from django.db import models
 
 
 class CountryCode(models.Model):
-    country = models.IntegerField()
+    country = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'country_code'
 
 
@@ -57,7 +57,7 @@ class Mort(models.Model):
     im_deaths4 = models.IntegerField(db_column='IM_Deaths4', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'mort'
 
 
@@ -97,5 +97,5 @@ class Pop(models.Model):
     lb = models.IntegerField(db_column='Lb', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'pop'
