@@ -11,15 +11,26 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='CountryCode',
+            name='Cause',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('country', models.IntegerField()),
+                ('CauseNumber', models.TextField(db_column='CauseNumber')),
+                ('CauseDescription', models.TextField(db_column='CauseDescription')),
+            ],
+            options={
+                'db_table': 'cause',
+                'managed': True,
+            },
+        ),
+        migrations.CreateModel(
+            name='CountryCode',
+            fields=[
+                ('country', models.IntegerField(serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
             ],
             options={
                 'db_table': 'country_code',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -29,7 +40,7 @@ class Migration(migrations.Migration):
                 ('country', models.IntegerField(db_column='Country')),
                 ('admin1', models.IntegerField(null=True, db_column='Admin1', blank=True)),
                 ('subdiv', models.CharField(max_length=3, db_column='Subdiv', blank=True)),
-                ('year', models.TextField(db_column='Year', blank=True)),
+                ('year', models.IntegerField(db_column='Year', blank=True)),
                 ('list', models.CharField(max_length=3, db_column='List', blank=True)),
                 ('cause', models.CharField(max_length=5, db_column='Cause', blank=True)),
                 ('sex', models.IntegerField(null=True, db_column='Sex', blank=True)),
@@ -68,7 +79,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'mort',
-                'managed': False,
+                'managed': True,
             },
         ),
         migrations.CreateModel(
@@ -111,7 +122,7 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'pop',
-                'managed': False,
+                'managed': True,
             },
         ),
     ]

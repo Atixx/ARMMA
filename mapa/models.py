@@ -19,7 +19,7 @@ class Mort(models.Model):
     country = models.IntegerField(db_column='Country')  # Field name made lowercase.
     admin1 = models.IntegerField(db_column='Admin1', blank=True, null=True)  # Field name made lowercase.
     subdiv = models.CharField(db_column='Subdiv', max_length=3, blank=True)  # Field name made lowercase.
-    year = models.TextField(db_column='Year', blank=True)  # Field name made lowercase. This field type is a guess.
+    year = models.IntegerField(db_column='Year', blank=True)  # Field name made lowercase. This field type is a guess.
     list = models.CharField(db_column='List', max_length=3, blank=True)  # Field name made lowercase.
     cause = models.CharField(db_column='Cause', max_length=5, blank=True)  # Field name made lowercase.
     sex = models.IntegerField(db_column='Sex', blank=True, null=True)  # Field name made lowercase.
@@ -99,3 +99,12 @@ class Pop(models.Model):
     class Meta:
         managed = True
         db_table = 'pop'
+
+
+class Cause(models.Model):
+    CauseNumber = models.TextField(db_column='CauseNumber', blank=False, null=False)
+    CauseDescription = models.TextField(db_column='CauseDescription')
+
+    class Meta:
+        managed = True
+        db_table = 'cause'
