@@ -10,6 +10,9 @@ class CountryCode(models.Model):
     country = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
 
+    def __unicode__(self):              # __unicode__ on Python 2
+        return self.name
+
     class Meta:
         managed = True
         db_table = 'country_code'
@@ -102,7 +105,8 @@ class Pop(models.Model):
 
 
 class Cause(models.Model):
-    CauseNumber = models.TextField(db_column='CauseNumber', blank=False, null=False)
+    CauseStart = models.TextField(db_column='CauseStart', blank=True, null=True)
+    CauseEnd = models.TextField(db_column='CauseEnd', blank=True, null=True)
     CauseDescription = models.TextField(db_column='CauseDescription')
 
     class Meta:
