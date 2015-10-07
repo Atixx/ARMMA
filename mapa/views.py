@@ -4,10 +4,15 @@ from django.db.models import Sum
 
 # Create your views here.
 def index(request):
-    query = tripleFiltro(2010, "AAA", 2)
-    #for c in CountryCode.objects.filter(name__startswith='J'):
-        #[c.name] = Mort.objects.filter(country=c.country).aggregate(Sum('deaths1'))
-        #for q in Mort.objects.raw('SELECT id, deaths1 FROM mort WHERE country = %s',[c.country]):
-    diccionario = generarDic(query, "deaths9")
-    context = {"test" : diccionario}
+    context = {}
     return render(request, 'mapa/index.html',context)
+
+def data(request, paises): #Garantizado desde URLs que solo pueda entrar 1 o 2 letras como parametro paises
+    query = tripleFiltro(2010, "AAA", 2)
+    if len(paises) > 1:
+        paises = filtrarPaises(paises[0],paises[1])
+    else:
+        paises = filtrarPaises(paises[0])
+    diccionario = generarDic(query, "deaths9",paises)
+    context = {"test" : diccionario}
+    return render(request, 'mapa/data.html',context)
