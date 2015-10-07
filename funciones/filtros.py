@@ -2,11 +2,17 @@ from mapa.models import CountryCode, Mort
 from django.db.models import Sum
 
     #Recibe el anio de ocurrencia, la causa, y el genero (0 para indistinto)
-def tripleFiltro(anio, causa, sexo):
-    if (sexo != 0):
-        query = Mort.objects.filter(year = anio).filter(cause=causa).filter(sex=sexo)
+def tripleFiltro(anio, sexo, causaIni, causaFin = None):
+    if causaFin == None:
+        if (sexo != 0):
+            query = Mort.objects.filter(year = anio).filter(cause=causaIni).filter(sex=sexo)
+        else:
+            query = Mort.objects.filter(year = anio).filter(cause=causaIni)
     else:
-        query = Mort.objects.filter(year = anio).filter(cause=causa)
+        if (sexo != 0):
+            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin)).filter(sex=sexo)
+        else:
+            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin))
     return query
 
 def filtrarPaises(inicio, fin = None): #fin es excluyente, A-B no responderia con los paises de B
