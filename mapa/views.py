@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from funciones.filtros import *
 from django.db.models import Sum
+import pdb
 
 # Create your views here.
 def index(request):
     context = {}
     return render(request, 'mapa/index.html',context)
 
-def data(request, paises): #Garantizado desde URLs que solo pueda entrar 1 o 2 letras como parametro paises
-    query = tripleFiltro(2010, "AAA", 2)
+def data(request, paises, anio, causaId, sexo): #Garantizado desde URLs que solo pueda entrar 1 o 2 letras como parametro paises
+    #pdb.set_trace()
+    query = tripleFiltro(int(anio),"AAA",int(sexo))
+    #query = tripleFiltro(2010, "AAA", 2)
     if len(paises) > 1:
         paises = filtrarPaises(paises[0],paises[1])
     else:
