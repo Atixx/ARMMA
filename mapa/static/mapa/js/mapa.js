@@ -25,15 +25,7 @@ function initmap() {
 initmap();
 
 $(document).ready(function() {
-
-    var polygon = L.polygon([
-    [-34.7315, -58.3902],
-    [-34.736, -58.3902],
-    [-34.736, -58.394],
-    [-34.7315, -58.394]
-]).addTo(map);
-
- //PRUEBA DE LECTURA DE ARCHIVO.JSON CON AJAX.  OK.
+//PRUEBA DE LECTURA DE ARCHIVO.JSON CON AJAX.  OK.
 
 var ury = (function () {
     var ury = null;
