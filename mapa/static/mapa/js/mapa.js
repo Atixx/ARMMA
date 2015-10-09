@@ -126,11 +126,12 @@ legend.addTo(map);
 	*/
 	$('#input').click(function(){ //Falta poner el logo de cargando
 			$.ajax({
-  			url: "data/"+$('#range').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()
+  			url: "data/"+$('#range').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#deaths').val()
 			})
 				.done(function( html ) {
 	    		$( "#agregar" ).append( html );
 	  	});
+
 		});
 
 	});

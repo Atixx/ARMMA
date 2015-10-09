@@ -26,7 +26,7 @@ def filtrarPaises(inicio, fin = None): #fin es excluyente, A-B no responderia co
 def generarDic(query, grupoEdad, paises):
     dic = {}
     for c in paises:
-        dic[c.name] = query.filter(country=c.country).aggregate(total=Sum(grupoEdad))['total']
+        dic[c.country] = query.filter(country=c.country).aggregate(total=Sum(grupoEdad))['total']
     #else: #Quedo para sumar 2 edades, no puede contemplar parametros variables
     #    for c in CountryCode.objects.filter(name__startswith='A'):
     #    dic[c.name] = query.filter(country=c.country).aggregate(total=Sum(grupoInicio)+Sum('deaths9'))['total']

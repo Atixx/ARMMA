@@ -4,10 +4,48 @@
 {% block contenido %}
 <div id="map"></div>
 {{test}}
-Range: <input type="text" id="range"><br>
-Year: <input type="text" id="year"><br>
-Cause: <input type="text" id="cause"><br>
-Sex: <input type="text" id="sex"><br>
-<button id="input">Input</button>
+<div class="well">
+  <div class="row">
+  <div class="col-md-2">
+    Range:<input type="text" id="range">
+  </div>
+  <div class="col-md-2">
+    Age(Deaths):<input type="text" id="deaths">
+  </div>
+  <div class="col-md-2">
+  Year:</br>
+    <select id="year">
+      {% for year in years%}
+      <option value="{{year}}">{{year}}</option>
+      {%endfor%}
+    </select>
+  </div>
+  <div class="col-md-2">
+    Sex:</br>
+    <select id="sex">
+      <option value="0">Indistinto</option>
+      <option value="1">Masculino</option>
+      <option value="2">Femenino</option>
+      <option value="9">No Especificado</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+</br>
+  <div class="col-md-8">
+      Cause:
+      <select id="cause">
+        <option value="0">Todas las causas</option>
+        {% for c in causas%}
+        <option value="{{c.id}}">{{c.CauseDescription}}</option>
+        {%endfor%}
+      </select>
+  </div>
+  <div class="col-md-2">
+  </br>
+    <button id="input">Input</button>
+  </div>
+</div>
+</div>
 <div id="agregar">Texto agregado</div>
 {% endblock contenido %}

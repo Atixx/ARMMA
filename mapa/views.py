@@ -6,7 +6,9 @@ import pdb
 
 # Create your views here.
 def index(request):
-    context = {}
+    causas = Cause.objects.all()
+    years = range(1988, 2014)
+    context = {"causas" : causas, "years" : years }
     return render(request, 'mapa/index.html',context)
 
 # Garantizado desde URLs que solo pueda entrar 1 o 2 letras como parametro paises (primer letra)
@@ -14,7 +16,7 @@ def index(request):
 # ID de causa (pk del modelo)
 # en caso que sea todas las causas se usara id=0 y aca se resuelve a 'AAA'
 #
-def data(request, paises, anio,sexo, causaId):
+def data(request, paises, anio,sexo, causaId, deaths):
     #pdb.set_trace()
     if int(causaId) == 0:
         causaIni = "AAA"
@@ -29,6 +31,7 @@ def data(request, paises, anio,sexo, causaId):
         paises = filtrarPaises(paises[0],paises[1])
     else:
         paises = filtrarPaises(paises[0])
-    diccionario = generarDic(query, "deaths9",paises)
+    deathSearch = "deaths"+deaths
+    diccionario = generarDic(query,deathSearch,paises)
     context = {"test" : diccionario}
     return render(request, 'mapa/data.html',context)
