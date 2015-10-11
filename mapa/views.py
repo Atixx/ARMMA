@@ -16,8 +16,7 @@ def index(request):
 # ID de causa (pk del modelo)
 # en caso que sea todas las causas se usara id=0 y aca se resuelve a 'AAA'
 #
-def data(request, paises, anio,sexo, causaId, deaths):
-    #pdb.set_trace()
+def data(request, paises, anio,sexo, causaId, edades):
     if int(causaId) == 0:
         causaIni = "AAA"
         causaFin = None
@@ -26,12 +25,14 @@ def data(request, paises, anio,sexo, causaId, deaths):
         causaIni = c.CauseStart
         causaFin = c.CauseEnd
     query = tripleFiltro(int(anio),int(sexo),causaIni, causaFin)
+    pop = poblacion(anio, sexo)
     #query = tripleFiltro(2010, "AAA", 2)
     if len(paises) > 1:
         paises = filtrarPaises(paises[0],paises[1])
     else:
         paises = filtrarPaises(paises[0])
-    deathSearch = "deaths"+deaths
-    diccionario = generarDic(query,deathSearch,paises)
+    deathSearch = "deaths"+edades
+    popSearch = "pop"+edades
+    diccionario = generarDic(query,pop,deathSearch,popSearch,paises)
     context = {"test" : diccionario}
     return render(request, 'mapa/data.html',context)
