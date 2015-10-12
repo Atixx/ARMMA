@@ -48,6 +48,12 @@ def generarDic(query, population, deathsSearch,popSearch, paises):
     #    query.aggregate(total=Sum('deaths10')+Sum('deaths9'))['total']
     return dic
 
+def ultimoAnioPop(pais, anioReal):
+    p = Pop.objects.filter(country=pais).order_by('-year')
+    if (p):
+        return int(p[0].year)
+    else:
+        return None
 #a b
 #c d e
 #f g h i j k
