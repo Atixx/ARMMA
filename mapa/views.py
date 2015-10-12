@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from funciones.filtros import *
-from mapa.models import Cause
+from mapa.models import *
 from django.db.models import Sum
 import pdb
 
@@ -24,15 +24,12 @@ def data(request, paises, anio,sexo, causaId, edades):
         c = Cause.objects.get(pk=causaId)
         causaIni = c.CauseStart
         causaFin = c.CauseEnd
-    query = tripleFiltro(int(anio),int(sexo),causaIni, causaFin)
-    pop = poblacion(anio, sexo)
-    #query = tripleFiltro(2010, "AAA", 2)
     if len(paises) > 1:
         paises = filtrarPaises(paises[0],paises[1])
     else:
         paises = filtrarPaises(paises[0])
-    deathSearch = "deaths"+edades
-    popSearch = "pop"+edades
-    diccionario = generarDic(query,pop,deathSearch,popSearch,paises)
+    pais = CountryCode.objects.get(pk=3150)
+    myPais = xPais(pais, anio, sexo, causaIni, causaFin, edades)
+    diccionario = {pais.name : myPais}
     context = {"test" : diccionario}
     return render(request, 'mapa/data.html',context)
