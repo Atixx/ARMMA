@@ -10,9 +10,9 @@ def tripleFiltro(anio, sexo, causaIni, causaFin = None):
             query = Mort.objects.filter(year = anio).filter(cause=causaIni)
     else:
         if (sexo != 0):
-            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin)).filter(sex=sexo)
+            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin)).filter(sex=sexo).exclude(cause='AAA')
         else:
-            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin))
+            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin)).exclude(cause='AAA')
     return query
 
 def filtrarPaises(inicio, fin = None): #fin es excluyente, A-B no responderia con los paises de B
