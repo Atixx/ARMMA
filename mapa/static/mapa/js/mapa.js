@@ -32,7 +32,7 @@ var paisesJson = {"1010":"DZA","1020":"AGO","1025":"BEN","1030":"BWA","1035":"BF
 	/*"5105":"KIRIBATI?","5107":"MARSHALL ISLANDS?","5108":"MICRONESIA?","5110":"NAURU?",*/"5150":"NZL",/*"5170":"NIUE?","5180":"PALAU?",*/
 	"5195":"PNG",/*"5197":"SAMOA?",*/"5198":"SLB",/*"5200":"TONGA?","5205":"TUVALU?",*/"5207":"VUT"}
 
-var coloresDemo = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
+var coloresFijos = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
 
 function initmap() {
 	// set up the map
@@ -60,10 +60,10 @@ function cargarPaises() {
 
 	for(key in paisesJson)
 	{
-		var nombrePais = (function ()
+		var geoPais = (function ()
 				{
 					var c = paisesJson[key];
-					nombrePais = null;
+					geoPais = null;
 					$.ajax(
 					{
 						'async': false,
@@ -76,6 +76,7 @@ function cargarPaises() {
 				});
 				return json;
 				})();
+
 		var e = Math.floor(Math.random()*(9)); // con el 1er coloresDemo
 		//var e = Math.floor(Math.random()*(36)); // con el 2do
 
@@ -86,24 +87,84 @@ function cargarPaises() {
 			"weight": 2,
 			"fillOpacity": 0.65
 		};
-		L.geoJson(nombrePais, {style: nombrePaisStyle}).addTo(map);
+		L.geoJson(geoPais, {style: nombrePaisStyle}).addTo(map);
 
 	}
 
 }
 
+function loadPais(pais,anio,causa,sexo,edades){
+	var geoPais = function (){
+				var c = paisesJson[pais]
+				geoPais = null;
+				$.ajax(
+				{
+					'async': false,
+					'global': false,
+					'url': "/static/mapa/js/paises/"+c.toString()+".geo.json",
+					'dataType': "json",
+					'success': function (data) {
+					json = data;
+				}
+			});
+			return json;
+		}();
+
+		var dataPais = function (){
+					dataPais = null;
+					$.ajax(
+					{
+						'async': false,
+						'global': false,
+						'url': "data/"+pais.toString()+"/"+anio.toString()+"/"+causa.toString()+"/"+sexo.toString()+"/"+edades.toString(),
+						'success': function (data) {
+						info = data;
+					}
+				});
+				return info;
+			}();
+
+	var colorPais = parseInt(dataPais)
+	if (colorPais > 8) {
+		colorPais = 8
+	}
+	var stylePais =
+	{
+		"color" : "#000",
+		"fillColor": coloresFijos[colorPais],//"#74f0af",
+		"weight": 2,
+		"fillOpacity": 0.65
+	};
+	L.geoJson(geoPais, {style: stylePais}).addTo(map);
+
+}
+
+
 initmap();
+
 $(document).ready(function() {
-	cargarPaises();
-	$('#input').click(function(){ //Falta poner el logo de cargando
+	/*$('#input').click(function(){ //Falta poner el logo de cargando
 			$.ajax({
-  			url: "data/"+$('#range').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#edades').val()
+  			url: "data/"+$('#pais').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#edades').val()
 			})
 				.done(function( html ) {
 	    		$( "#agregar" ).append( html );
 	  	});
 
 		});
+  */
+
+	var test = [2070,2020,2120,2460,2360,2060,2370,2130,2470];
+	$('#input').click(function(){
+		//for (i in paisesJson){
+		for (i = 0; i<test.length; i++){
+				loadPais(test[i],$('#year').val(),$('#cause').val(),$('#sex').val(),$('#edades').val())
+		}
+
+		//loadPais($('#pais').val(),$('#year').val(),$('#cause').val(),$('#sex').val(),$('#edades').val())
+	});
+		//setTimeout(cargarPaises(),100);
+
 		/*
 
 		  var legend = L.control({position: 'topright'});
@@ -115,8 +176,4 @@ $(document).ready(function() {
 		};
 		legend.addTo(map);
 		*/
-
-
-
-
 });

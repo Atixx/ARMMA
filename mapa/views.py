@@ -27,6 +27,5 @@ def data(request, pais, anio,sexo, causaId, edades):
         causaFin = c.CauseEnd
     pais = CountryCode.objects.get(pk=pais)
     myPais = xPais(pais, anio, sexo, causaIni, causaFin, edades)
-    diccionario = {int(pais.country) : myPais}
-    context = {"data" : diccionario}
+    context = {"data" : myPais}
     return render(request, 'mapa/data.html',context)
