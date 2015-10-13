@@ -18,16 +18,16 @@ function initmap() {
 	var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 5, attribution: osmAttrib});
 
 
-	map.setView(new L.LatLng(-34.735428, -58.390990),4);
+	map.setView(new L.LatLng(-24.735428, -58.390990),3);
 	map.addLayer(osm);
 }
 
 initmap();
 
 $(document).ready(function() {
-	
-	
- 
+
+
+
 	var paisesJson = {"1010":"DZA","1020":"AGO","1025":"BEN","1030":"BWA","1035":"BFA","1040":"BDI","1045":"CMR",/*"1060":"CAPE VERDE?",*/"1070":"CAF","1080":"TCD",
 		/*"1090":"COMOROS?",*/"1100":"COG","1115":"CIV","1120":"DJI","1125":"EGY","1130":"GNQ","1135":"ERI","1140":"ETH","1160":"GAB","1170":"GMB","1180":"GHA",
 		"1190":"GIN","1192":"GNB","1220":"KEN","1230":"LSO","1240":"LBR","1250":"LBY","1260":"MDG","1270":"MWI","1280":"MLI","1290":"MRT",
@@ -55,17 +55,17 @@ $(document).ready(function() {
 		/*"5105":"KIRIBATI?","5107":"MARSHALL ISLANDS?","5108":"MICRONESIA?","5110":"NAURU?",*/"5150":"NZL",/*"5170":"NIUE?","5180":"PALAU?",*/
 		"5195":"PNG",/*"5197":"SAMOA?",*/"5198":"SLB",/*"5200":"TONGA?","5205":"TUVALU?",*/"5207":"VUT"}
 
-	//var coloresDemo = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
-				
-	var coloresDemo = ["#f7fcfd","#e5f5f9","#ccece6","#99d8c9","#66c2a4","#41ae76","#238b45","#006d2c","#00441b]",
-					"#f7fdfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b",
-					"#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000",
-					"#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"];					
-				
+	var coloresDemo = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
+
+	//var coloresDemo = ["#f7fcfd","#e5f5f9","#ccece6","#99d8c9","#66c2a4","#41ae76","#238b45","#006d2c","#00441b]",
+	//				"#f7fdfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b",
+	//				"#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000",
+	//				"#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"];
+
 	for(key in paisesJson)
-	{	
-		var nombrePais = (function () 
-				{	
+	{
+		var nombrePais = (function ()
+				{
 					var c = paisesJson[key];
 					nombrePais = null;
 					$.ajax(
@@ -79,30 +79,31 @@ $(document).ready(function() {
 					}
 				});
 				return json;
-				})(); 
-		//var e = Math.floor(Math.random()*(9)); // con el 1er coloresDemo
-		var e = Math.floor(Math.random()*(36)); // con el 2do
-		
-		var nombrePaisStyle = 
+				})();
+		var e = Math.floor(Math.random()*(9)); // con el 1er coloresDemo
+		//var e = Math.floor(Math.random()*(36)); // con el 2do
+
+		var nombrePaisStyle =
 		{
-			"color": coloresDemo[e],//"#74f0af",
-			"weight": 5,
-			"opacity": 0.50
-		};	  
+		  "color" : "#000",
+			"fillColor": coloresDemo[e],//"#74f0af",
+			"weight": 2,
+			"fillOpacity": 0.65
+		};
 		L.geoJson(nombrePais, {style: nombrePaisStyle}).addTo(map);
-		
+
 	}
 
-	
-	
-	
-	
-	
-	
-/*	
+
+
+
+
+
+
+/*
 //PRUEBA DE LECTURA DE ARCHIVO.JSON CON AJAX.  OK.
 
-	
+
 var ury = (function () {
     var ury = null;
     $.ajax({
@@ -194,7 +195,7 @@ legend.addTo(map);
 	*/
 	$('#input').click(function(){ //Falta poner el logo de cargando
 			$.ajax({
-  			url: "data/"+$('#range').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#deaths').val()
+  			url: "data/"+$('#range').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#edades').val()
 			})
 				.done(function( html ) {
 	    		$( "#agregar" ).append( html );
