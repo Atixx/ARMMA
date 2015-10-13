@@ -1,20 +1,5 @@
 from mapa.models import CountryCode, Mort, Pop
 from django.db.models import Sum
-import pdb
-
-    #Recibe el anio de ocurrencia, la causa, y el genero (0 para indistinto)
-def tripleFiltro(anio, sexo, causaIni, causaFin = None):
-    if causaFin == None:
-        if (sexo != 0):
-            query = Mort.objects.filter(year = anio).filter(cause=causaIni).filter(sex=sexo)
-        else:
-            query = Mort.objects.filter(year = anio).filter(cause=causaIni)
-    else:
-        if (sexo != 0):
-            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin)).filter(sex=sexo).exclude(cause='AAA')
-        else:
-            query = Mort.objects.filter(year = anio).filter(cause__range=(causaIni, causaFin)).exclude(cause='AAA')
-    return query
 
 def ultimoAnioPop(pais, anioReal):
     p = Pop.objects.filter(country=pais).filter(year__lt=anioReal).order_by('-year')
