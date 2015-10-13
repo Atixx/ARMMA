@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from funciones.filtros import *
-from mapa.models import Cause
+from mapa.models import *
 from django.db.models import Sum
 import pdb
 
@@ -11,12 +11,12 @@ def index(request):
     context = {"causas" : causas, "years" : years }
     return render(request, 'mapa/index.html',context)
 
-# Garantizado desde URLs que solo pueda entrar 1 o 2 letras como parametro paises (primer letra)
+# Pais: pk del pais
 # anio de ocurrencia
-# ID de causa (pk del modelo)
+# ID de causa (como esta definido en index.html)
 # en caso que sea todas las causas se usara id=0 y aca se resuelve a 'AAA'
 #
-def data(request, paises, anio,sexo, causaId, deaths):
+def data(request, pais, anio,sexo, causaId, edades):
     #pdb.set_trace()
     if int(causaId) == 0:
         causaIni = "AAA"
@@ -25,13 +25,8 @@ def data(request, paises, anio,sexo, causaId, deaths):
         c = Cause.objects.get(pk=causaId)
         causaIni = c.CauseStart
         causaFin = c.CauseEnd
-    query = tripleFiltro(int(anio),int(sexo),causaIni, causaFin)
-    #query = tripleFiltro(2010, "AAA", 2)
-    if len(paises) > 1:
-        paises = filtrarPaises(paises[0],paises[1])
-    else:
-        paises = filtrarPaises(paises[0])
-    deathSearch = "deaths"+deaths
-    diccionario = generarDic(query,deathSearch,paises)
-    context = {"test" : diccionario}
+    pais = CountryCode.objects.get(pk=pais)
+    myPais = xPais(pais, anio, sexo, causaIni, causaFin, edades)
+    diccionario = {int(pais.country) : myPais}
+    context = {"data" : diccionario}
     return render(request, 'mapa/data.html',context)
