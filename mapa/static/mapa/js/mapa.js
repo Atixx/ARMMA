@@ -34,6 +34,7 @@ var paisesJson = {"1010":"DZA","1020":"AGO","1025":"BEN","1030":"BWA","1035":"BF
 
 var coloresFijos = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
 
+
 function initmap() {
 	// set up the map
 	map = new L.Map('map');
@@ -93,6 +94,25 @@ function cargarPaises() {
 
 }
 
+function dividirPaises() {
+	var counter = 0;
+	var buffers = [];
+	var buffer = [];
+	for (i in paisesJson) {
+			counter++;
+			if (counter < 9) {
+				buffer.push(i);
+			}
+			else {
+				buffers.push(buffer);
+				counter = 0;
+				buffer = []
+			}
+	}
+	buffers.push(buffer);
+	return buffers;
+}
+
 function loadPais(pais,anio,causa,sexo,edades){
 	var geoPais = function (){
 				var c = paisesJson[pais]
@@ -139,41 +159,37 @@ function loadPais(pais,anio,causa,sexo,edades){
 
 }
 
+function loadByZones(paises) {
+	for (var i = 0; i < paises.length; i++){
+			loadPais(paises[i],$('#year').val(),$('#cause').val(),$('#sex').val(),$('#edades').val())
+		}
+}
 
 initmap();
 
+var paisesDiv = dividirPaises();
+
+
+//TODO: Poner logo de cargando
 $(document).ready(function() {
-	/*$('#input').click(function(){ //Falta poner el logo de cargando
-			$.ajax({
-  			url: "data/"+$('#pais').val()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#edades').val()
-			})
-				.done(function( html ) {
-	    		$( "#agregar" ).append( html );
-	  	});
+	//var test = [2070,2020,2120,2460,2360,2060,2370,2130,2470];
+	var paisesBuffers = dividirPaises();
 
-		});
-  */
-
-	var test = [2070,2020,2120,2460,2360,2060,2370,2130,2470];
 	$('#input').click(function(){
-		//for (i in paisesJson){
-		for (i = 0; i<test.length; i++){
-				loadPais(test[i],$('#year').val(),$('#cause').val(),$('#sex').val(),$('#edades').val())
+		for (key in paisesBuffers){ //TODO: cambiar a for comun, poner bandera para correr uno por vez????
+			setTimeout(loadByZones(paisesBuffers[key]),1000);
 		}
-
-		//loadPais($('#pais').val(),$('#year').val(),$('#cause').val(),$('#sex').val(),$('#edades').val())
 	});
-		//setTimeout(cargarPaises(),100);
-
-		/*
-
-		  var legend = L.control({position: 'topright'});
-		  legend.onAdd = function (map) {
-		    var div = L.DomUtil.create('div', 'selectors');
-		    div.innerHTML = '<select><option>Seleccione Genero</option><option>Masculino</option><option>Femenino</option></select> <select><option>Seleccione Causa</option><option>Causa 1</option><option>Causa 2</option></select><select><option>Seleccione año</option><option>2010</option><option>2011</option></select>';
-		    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-		    return div;
-		};
-		legend.addTo(map);
-		*/
 });
+
+
+/*
+var legend = L.control({position: 'topright'});
+legend.onAdd = function (map) {
+	var div = L.DomUtil.create('div', 'selectors');
+	div.innerHTML = '<select><option>Seleccione Genero</option><option>Masculino</option><option>Femenino</option></select> <select><option>Seleccione Causa</option><option>Causa 1</option><option>Causa 2</option></select><select><option>Seleccione año</option><option>2010</option><option>2011</option></select>';
+	div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+	return div;
+};
+legend.addTo(map);
+*/
