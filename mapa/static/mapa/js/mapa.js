@@ -1,5 +1,3 @@
-//var map = L.map('map').setView([-34.735428, -58.390990], 8);
-
 var map;
 var ajaxRequest;
 var plotlist;
@@ -45,75 +43,14 @@ function initmap() {
   var osmUrl='http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
 	//var osmAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
   var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'
-	var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 5, attribution: osmAttrib});
+	var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 5, attribution: osmAttrib});
 
 
-	map.setView(new L.LatLng(-24.735428, -58.390990),3);
+	map.setView(new L.LatLng(10, 0),3);
 	map.addLayer(osm);
 }
 
-function cargarPaises() {
-
-	//var coloresDemo = ["#f7fcfd","#e5f5f9","#ccece6","#99d8c9","#66c2a4","#41ae76","#238b45","#006d2c","#00441b]",
-	//				"#f7fdfd","#e0ecf4","#bfd3e6","#9ebcda","#8c96c6","#8c6bb1","#88419d","#810f7c","#4d004b",
-	//				"#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000",
-	//				"#ffffcc","#ffeda0","#fed976","#feb24c","#fd8d3c","#fc4e2a","#e31a1c","#bd0026","#800026"];
-
-	for(key in paisesJson)
-	{
-		var geoPais = (function ()
-				{
-					var c = paisesJson[key];
-					geoPais = null;
-					$.ajax(
-					{
-						'async': false,
-						'global': false,
-						'url': "/static/mapa/js/paises/"+c.toString()+".geo.json",
-						'dataType': "json",
-						'success': function (data) {
-						json = data;
-					}
-				});
-				return json;
-				})();
-
-		var e = Math.floor(Math.random()*(9)); // con el 1er coloresDemo
-		//var e = Math.floor(Math.random()*(36)); // con el 2do
-
-		var nombrePaisStyle =
-		{
-		  "color" : "#000",
-			"fillColor": coloresDemo[e],//"#74f0af",
-			"weight": 2,
-			"fillOpacity": 0.65
-		};
-		L.geoJson(geoPais, {style: nombrePaisStyle}).addTo(map);
-
-	}
-
-}
-
-function dividirPaises() {
-	var counter = 0;
-	var buffers = [];
-	var buffer = [];
-	for (i in paisesJson) {
-			counter++;
-			if (counter < 9) {
-				buffer.push(i);
-			}
-			else {
-				buffers.push(buffer);
-				counter = 0;
-				buffer = []
-			}
-	}
-	buffers.push(buffer);
-	return buffers;
-}
-
-function loadPais(pais,anio,causa,sexo,edades){
+function loadPais(pais,dataPais){
 	var geoPais = function (){
 				var c = paisesJson[pais]
 				geoPais = null;
@@ -129,21 +66,6 @@ function loadPais(pais,anio,causa,sexo,edades){
 			});
 			return json;
 		}();
-
-		var dataPais = function (){
-					dataPais = null;
-					$.ajax(
-					{
-						'async': false,
-						'global': false,
-						'url': "data/"+pais.toString()+"/"+anio.toString()+"/"+causa.toString()+"/"+sexo.toString()+"/"+edades.toString(),
-						'success': function (data) {
-						info = data;
-					}
-				});
-				return info;
-			}();
-
 	var colorPais = parseInt(dataPais)
 	if (colorPais > 8) {
 		colorPais = 8
@@ -159,29 +81,35 @@ function loadPais(pais,anio,causa,sexo,edades){
 
 }
 
-function loadByZones(paises) {
-	for (var i = 0; i < paises.length; i++){
-			loadPais(paises[i],$('#year').val(),$('#cause').val(),$('#sex').val(),$('#edades').val())
-		}
-}
+function ajaxLoad(paises) {
+		$.ajax(
+		{
+			'async' :true,
+			'url': "data/"+paises.toString()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#edades').val(),
+			'success': function (data) {
+				loadPais(paises, data)
+			}
 
+		});
+}
 initmap();
 
-var paisesDiv = dividirPaises();
+var paisesArray = function(){
+	var buffer = [];
+	for (i in paisesJson) {
+		buffer.push(i);
+	}
+	return buffer;
+}();
 
 
-//TODO: Poner logo de cargando
 $(document).ready(function() {
-	//var test = [2070,2020,2120,2460,2360,2060,2370,2130,2470];
-	var paisesBuffers = dividirPaises();
-
 	$('#input').click(function(){
-		for (key in paisesBuffers){ //TODO: cambiar a for comun, poner bandera para correr uno por vez????
-			setTimeout(loadByZones(paisesBuffers[key]),1000);
+		for (var i = 0; i < paisesArray.length; i++){
+			ajaxLoad(paisesArray[i]);
 		}
 	});
 });
-
 
 /*
 var legend = L.control({position: 'topright'});
