@@ -7,9 +7,6 @@
 <div class="well">
   <div class="row">
   <div class="col-md-2">
-    Codigo Pais:<input type="text" id="range">
-  </div>
-  <div class="col-md-2">
     Age(Deaths):</br>
     <select id="edades">
       <option value="0">Todas las Edades</option>
@@ -39,6 +36,10 @@
       <option value="2">Femenino</option>
     </select>
   </div>
+  <div class="col-md-2">
+  </br>
+    <button id="input">Mostrar</button>
+  </div>
 </div>
 <div class="row">
 </br>
@@ -51,11 +52,6 @@
         {%endfor%}
       </select>
   </div>
-  <div class="col-md-2">
-  </br>
-    <button id="input">Input</button>
-  </div>
 </div>
 </div>
-<div id="agregar">Texto agregado</div>
 {% endblock contenido %}
