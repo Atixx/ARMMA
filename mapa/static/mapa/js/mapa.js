@@ -30,8 +30,7 @@ var paisesJson = {"1010":"DZA","1020":"AGO","1025":"BEN","1030":"BWA","1035":"BF
 	/*"5105":"KIRIBATI?","5107":"MARSHALL ISLANDS?","5108":"MICRONESIA?","5110":"NAURU?",*/"5150":"NZL",/*"5170":"NIUE?","5180":"PALAU?",*/
 	"5195":"PNG",/*"5197":"SAMOA?",*/"5198":"SLB",/*"5200":"TONGA?","5205":"TUVALU?",*/"5207":"VUT"}
 
-var coloresFijos = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000"];
-
+var coloresFijos = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000", "#777"];
 
 function initmap() {
 	// set up the map
@@ -66,9 +65,14 @@ function loadPais(pais,dataPais){
 			});
 			return json;
 		}();
-	var colorPais = parseInt(dataPais)
+	dataPais = dataPais.slice(0,-1);
+	var colorPais = parseInt(dataPais);
 	if (colorPais > 8) {
 		colorPais = 8
+	}
+	else if (isNaN(colorPais))
+	{
+		colorPais = 9;
 	}
 	var stylePais =
 	{
@@ -85,7 +89,7 @@ function ajaxLoad(paises) {
 		$.ajax(
 		{
 			'async' :true,
-			'url': "data/"+paises.toString()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$('#sex').val()+"/"+$('#edades').val(),
+			'url': "data/"+paises.toString()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$("[name=sex]:checked").val()+"/"+$('#edades').val(),
 			'success': function (data) {
 				loadPais(paises, data)
 			}
@@ -104,11 +108,19 @@ var paisesArray = function(){
 
 
 $(document).ready(function() {
+
 	$('#input').click(function(){
 		for (var i = 0; i < paisesArray.length; i++){
 			ajaxLoad(paisesArray[i]);
 		}
 	});
+
+	$('[data-slidepanel]').slidepanel({
+              orientation: 'left',
+              mode: 'overlay'
+          });
+
+	$('.selectpicker').selectpicker();
 });
 
 /*
