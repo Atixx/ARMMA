@@ -1,8 +1,20 @@
 #map {
-  height: 580px;
+  height: 100%;
 }
 
 #bottom
 {
     text-align:center;
+}
+
+body
+{
+  background-color: #262626;
+  text-shadow: 1px #aaa;
+  color: #ddd;
+}
+
+.footer
+{
+  background-color: inherit;
 }

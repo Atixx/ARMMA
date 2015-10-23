@@ -41,9 +41,9 @@ function initmap() {
   //var osmUrl='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
   var osmUrl='http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
 	//var osmAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
-  var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'
+	var localAttrib = 'Copyright &#169; Bascuñan Sebastián, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015, Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús.'
+  var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'+localAttrib;
 	var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 5, attribution: osmAttrib});
-
 
 	map.setView(new L.LatLng(10, 0),3);
 	map.addLayer(osm);
@@ -110,17 +110,31 @@ var paisesArray = function(){
 $(document).ready(function() {
 
 	$('#input').click(function(){
+		jPM.close(true);
 		for (var i = 0; i < paisesArray.length; i++){
 			ajaxLoad(paisesArray[i]);
 		}
 	});
 
-	$('[data-slidepanel]').slidepanel({
-              orientation: 'left',
-              mode: 'overlay'
-          });
+
+	var jPM = $.jPanelMenu({
+    menu: '#menu',
+    trigger: '.trigger',
+		clone: false,
+		//openPosition: '35%' //TODO:Queda para configurar el font en CSS, y una vez completado verificar denuevo esto
+	});
+
+	jPM.on();
 
 	$('.selectpicker').selectpicker();
+
+	var menuButton = L.control({position: 'topleft'});
+	menuButton.onAdd = function(map) {
+		var button = L.DomUtil.create('button', 'trigger btn btn-success');
+		button.innerHTML = "<span class='glyphicon glyphicon-forward'>";
+		return button;
+	};
+	menuButton.addTo(map);
 });
 
 /*

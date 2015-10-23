@@ -1,20 +1,18 @@
 <html>
   <head>
     {% load staticfiles %}
-    <link type="text/css" href= "{% static "mapa/css/normalize.css" %}" rel="stylesheet"></link>
     <link type="text/css" href= "{% static "mapa/css/bootstrap.min.css" %}" rel="stylesheet"></link>
     <link type="text/css" href= "{% static "mapa/css/bootstrap-theme.min.css" %}" rel="stylesheet"></link>
     <link type="text/css" href= "{% static "mapa/css/leaflet.css" %}" rel="stylesheet"></link>
     <link type="text/css" href= "{% static "mapa/css/mapa.css" %}" rel="stylesheet"></link>
     <link type="text/css" href= "{% static "mapa/css/bootstrap-select.min.css" %}" rel="stylesheet"></link>
-    <link type="text/css" href= "{% static "mapa/css/jquery.slidepanel.css" %}" rel="stylesheet"></link>
 
     <title>{% block titulo %}ARMMA{% endblock %}</title>
 
     <script src= "{% static "mapa/js/jquery-2.1.4.min.js" %}"></script>
     <script src= "{% static "mapa/js/bootstrap.min.js" %}"></script>
     <script src= "{% static "mapa/js/bootstrap-select.min.js" %}"></script>
-    <script src= "{% static "mapa/js/jquery.slidepanel.js" %}"></script>
+    <script src= "{% static "mapa/js/jquery.jpanelmenu.js" %}"></script>
 
   </head>
   <body>
@@ -22,10 +20,6 @@
   </body>
   <footer class="footer">
     {% block footer %}
-    <div id="bottom">
-      <p>Copyright &#169; Bascuñan Sebastián Pedro, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015</p>
-      <p>Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús. </p>
-    </div>
     {% endblock %}
 
     {% load staticfiles %}

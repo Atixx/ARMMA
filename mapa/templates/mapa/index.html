@@ -3,9 +3,9 @@
 
 {% block contenido %}
 <div id="map"></div>
-
-</br>
+<div id='menu'>
 <div class='container-fluid'>
+</br>
   <div class='row'>
     <div class='col-md-4'>
       Grupo Edades:
@@ -21,6 +21,9 @@
         <option value="8">65+</option>
       </select>
     </div>
+  </div>
+</br>
+  <div class='row'>
     <div class='col-md-4'>
       Año de Ocurrencia:
       <select id="year" class="selectpicker" data-live-search="true" data-style='btn-danger' data-size="6" data-width="auto"> <!-- Dropdown -->
@@ -29,6 +32,9 @@
         {%endfor%}
       </select>
     </div>
+  </div>
+</br>
+  <div class='row'>
     <div class='col-md-4'>
       Genero:
       <div class="btn-group" data-toggle="buttons">
@@ -55,10 +61,13 @@
         {%endfor%}
       </select>
     </div>
-    <div class='col-md-4 col-md-offset-2'>
+  </div>
+</br>
+  <div class='row'>
+    <div class='col-md-4'>
       <button id="input" class="btn btn-success">Mostrar</button>
     </div>
   </div>
 </div>
-  <!-- <a href="search" data-slidepanel="panel">Show Panel</a> -->
+</div>
 {% endblock contenido %}
