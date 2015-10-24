@@ -81,7 +81,11 @@ function loadPais(pais,dataPais){
 		"weight": 2,
 		"fillOpacity": 0.65
 	};
-	L.geoJson(geoPais, {style: stylePais}).addTo(map);
+	L.geoJson(
+		geoPais,
+		{style: stylePais}
+
+	).addTo(map);
 
 }
 
@@ -137,13 +141,16 @@ $(document).ready(function() {
 	menuButton.addTo(map);
 });
 
-/*
-var legend = L.control({position: 'topright'});
+
+var legend = L.control({position: 'bottomright'});
+
 legend.onAdd = function (map) {
-	var div = L.DomUtil.create('div', 'selectors');
-	div.innerHTML = '<select><option>Seleccione Genero</option><option>Masculino</option><option>Femenino</option></select> <select><option>Seleccione Causa</option><option>Causa 1</option><option>Causa 2</option></select><select><option>Seleccione año</option><option>2010</option><option>2011</option></select>';
-	div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-	return div;
+    var div = L.DomUtil.create('div', 'info legend'),
+    for (var i = 0; i < coloresFijos.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + coloresFijos[i] + '"></i> ' +
+            (i !== 9 ? i : 'No Data') + '<br>';
+    }
+    return div;
 };
 legend.addTo(map);
-*/
