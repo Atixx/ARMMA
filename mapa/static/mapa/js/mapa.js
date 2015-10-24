@@ -49,6 +49,40 @@ function initmap() {
 	map.addLayer(osm);
 }
 
+function highlightFeature(e) {
+	var layer = e.target;
+
+	layer.setStyle({
+		weight: 5,
+		color: '#2f2',
+		dashArray:'',
+		fillOpacity: 0.7
+	});
+	if (!L.Browser.ie && !L.Browser.opera) {
+		layer.bringToFront();
+	}
+}
+
+function resetHighlight(e) {
+	var layer = e.target;
+	layer.setStyle({
+		weight: 2,
+		color: "#000",
+		dashArray:'',
+		fillOpacity: 0.65
+	});
+	if (!L.Browser.ie && !L.Browser.opera) {
+		layer.bringToBack();
+	}
+}
+
+function onEachFeature(feature, layer) {
+	layer.on({
+		mouseover: highlightFeature,
+		mouseout: resetHighlight
+	});
+}
+
 function loadPais(pais,dataPais){
 	var geoPais = function (){
 				var c = paisesJson[pais]
@@ -83,9 +117,9 @@ function loadPais(pais,dataPais){
 	};
 	L.geoJson(
 		geoPais,
-		{style: stylePais}
-
-	).addTo(map);
+		{style: stylePais,
+		onEachFeature: onEachFeature
+	}).addTo(map);
 
 }
 
