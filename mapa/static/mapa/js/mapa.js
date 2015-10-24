@@ -145,7 +145,7 @@ $(document).ready(function() {
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend'),
+    var div = L.DomUtil.create('div', 'info legend');
     for (var i = 0; i < coloresFijos.length; i++) {
         div.innerHTML +=
             '<i style="background:' + coloresFijos[i] + '"></i> ' +
