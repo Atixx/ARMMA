@@ -32,23 +32,6 @@ var paisesJson = {"1010":"DZA","1020":"AGO","1025":"BEN","1030":"BWA","1035":"BF
 
 var coloresFijos = ["#fff7ec","#fee8c8","#fdd49e","#fdbb84","#fc8d59","#ef6548","#d7301f","#b30000","#7f0000", "#777"];
 
-function initmap() {
-	// set up the map
-	map = new L.Map('map');
-
-	// create the tile layer with correct attribution
-	//var osmUrl='http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
-  //var osmUrl='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
-  var osmUrl='http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
-	//var osmAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
-	var localAttrib = 'Copyright &#169; Bascuñan Sebastián, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015, Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús.'
-  var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'+localAttrib;
-	var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 5, attribution: osmAttrib});
-
-	map.setView(new L.LatLng(10, 0),3);
-	map.addLayer(osm);
-}
-
 var info = L.control({position: 'topright'});
 
 info.onAdd = function (map) {
@@ -149,7 +132,6 @@ function ajaxLoad(paises) {
 
 		});
 }
-initmap();
 
 var paisesArray = function(){
 	var buffer = [];
@@ -159,44 +141,26 @@ var paisesArray = function(){
 	return buffer;
 }();
 
-
-$(document).ready(function() {
-
-	$('#input').click(function(){
-		jPM.close(true);
-		for (var i = 0; i < paisesArray.length; i++){
-			ajaxLoad(paisesArray[i]);
-		}
-	});
-
-
-	var jPM = $.jPanelMenu({
-    menu: '#menu',
-    trigger: '.trigger',
-		clone: false,
-		//openPosition: '35%' //TODO:Queda para configurar el font en CSS, y una vez completado verificar denuevo esto
-	});
-
-	jPM.on();
-
-	$('.selectpicker').selectpicker();
-
-	var menuButton = L.control({position: 'topleft'});
-	menuButton.onAdd = function(map) {
-		var button = L.DomUtil.create('button', 'trigger btn btn-success');
-		button.innerHTML = "<span class='glyphicon glyphicon-search'>";
-		return button;
-	};
-	menuButton.addTo(map);
-
+var menuButton = L.control({position: 'topleft'});
+menuButton.onAdd = function(map) {
+	var button = L.DomUtil.create('button', 'trigger btn btn-success');
+	button.innerHTML = "<span class='glyphicon glyphicon-search'>";
+	return button;
+};
+/*
 var infoButton = L.control({position: 'topleft'});
 infoButton.onAdd = function(map) {
 	var button = L.DomUtil.create('button', 'btn btn-info');
 	button.innerHTML = "<span class='glyphicon glyphicon-info-sign'>";
 	return button;
 };
-infoButton.addTo(map);
-
+*/
+var infoButton = L.control({position : 'topleft'});
+infoButton.onAdd = function(map) {
+	var div = L.DomUtil.create('div');
+	div.innerHTML = '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal"> <span class="glyphicon glyphicon-info-sign"> </button>';
+	return div;
+};
 var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend');
@@ -207,8 +171,45 @@ legend.onAdd = function (map) {
     }
     return div;
 };
-legend.addTo(map);
 
-info.addTo(map);
+function initmap() {
+	// set up the map
+	map = new L.Map('map');
 
+	// create the tile layer with correct attribution
+	//var osmUrl='http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
+  //var osmUrl='http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+  var osmUrl='http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+	//var osmAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
+	var localAttrib = 'Copyright &#169; Bascuñan Sebastián, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015, Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús.'
+  var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'+localAttrib;
+	var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 5, attribution: osmAttrib});
+
+	map.setView(new L.LatLng(10, 0),3);
+	map.addLayer(osm);
+	legend.addTo(map);
+	menuButton.addTo(map);
+	infoButton.addTo(map);
+}
+
+$(document).ready(function() {
+	$('.selectpicker').selectpicker();
+	$('#input').click(function(){
+		jPM.close(true);
+		map.remove();
+		initmap();
+		info.addTo(map);
+		for (var i = 0; i < paisesArray.length; i++){
+			ajaxLoad(paisesArray[i]);
+		}
+	});
+	var jPM = $.jPanelMenu({
+    menu: '#menu',
+    trigger: '.trigger',
+		clone: false,
+		excludedPanelContent: ".modal"
+		//openPosition: '35%' //TODO:Queda para configurar el font en CSS, y una vez completado verificar denuevo esto
+	});
+	jPM.on();
+	initmap();
 });
