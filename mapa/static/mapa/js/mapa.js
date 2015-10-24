@@ -49,6 +49,19 @@ function initmap() {
 	map.addLayer(osm);
 }
 
+var info = L.control({position: 'topright'});
+
+info.onAdd = function (map) {
+	this._div = L.DomUtil.create('div','info');
+	this.update();
+	return this._div;
+};
+
+info.update = function (props) {
+	this._div.innerHTML = '<h4>Mortalidad</h4>' + (props ?
+	'<b>'+props.name + '</b></br>' + 'AlgunNumero' + ' % por persona' : 'Indique un pais');
+};
+
 function highlightFeature(e) {
 	var layer = e.target;
 
@@ -61,6 +74,7 @@ function highlightFeature(e) {
 	if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToFront();
 	}
+	info.update(layer.feature.properties);
 }
 
 function resetHighlight(e) {
@@ -74,6 +88,7 @@ function resetHighlight(e) {
 	if (!L.Browser.ie && !L.Browser.opera) {
 		layer.bringToBack();
 	}
+	info.update();
 }
 
 function onEachFeature(feature, layer) {
@@ -174,7 +189,7 @@ $(document).ready(function() {
 	};
 	menuButton.addTo(map);
 
-var infoButton = L.control({position: 'topright'});
+var infoButton = L.control({position: 'topleft'});
 infoButton.onAdd = function(map) {
 	var button = L.DomUtil.create('button', 'btn btn-info');
 	button.innerHTML = "<span class='glyphicon glyphicon-info-sign'>";
@@ -184,7 +199,7 @@ infoButton.addTo(map);
 
 var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend');
+    var div = L.DomUtil.create('div', 'legend');
     for (var i = 0; i < coloresFijos.length; i++) {
         div.innerHTML +=
             '<i style="background:' + coloresFijos[i] + '"></i> ' +
@@ -193,5 +208,7 @@ legend.onAdd = function (map) {
     return div;
 };
 legend.addTo(map);
+
+info.addTo(map);
 
 });
