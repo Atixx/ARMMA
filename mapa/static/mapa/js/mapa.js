@@ -135,17 +135,22 @@ $(document).ready(function() {
 	var menuButton = L.control({position: 'topleft'});
 	menuButton.onAdd = function(map) {
 		var button = L.DomUtil.create('button', 'trigger btn btn-success');
-		button.innerHTML = "<span class='glyphicon glyphicon-forward'>";
+		button.innerHTML = "<span class='glyphicon glyphicon-search'>";
 		return button;
 	};
 	menuButton.addTo(map);
-});
 
+var infoButton = L.control({position: 'topright'});
+infoButton.onAdd = function(map) {
+	var button = L.DomUtil.create('button', 'btn btn-info');
+	button.innerHTML = "<span class='glyphicon glyphicon-info-sign'>";
+	return button;
+};
+infoButton.addTo(map);
 
 var legend = L.control({position: 'bottomright'});
-
 legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend'),
+    var div = L.DomUtil.create('div', 'info legend');
     for (var i = 0; i < coloresFijos.length; i++) {
         div.innerHTML +=
             '<i style="background:' + coloresFijos[i] + '"></i> ' +
@@ -154,3 +159,5 @@ legend.onAdd = function (map) {
     return div;
 };
 legend.addTo(map);
+
+});
