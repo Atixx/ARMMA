@@ -41,6 +41,7 @@ def xPais(pais, anio, sexo, causaIni, causaFin, edades):
                 popTotal += p
         if q and p:
             retval = (((q+0.0)/p)*1000)
+            retval = round(retval,2)
         else:
             retval = None
     else:

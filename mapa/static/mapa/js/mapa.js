@@ -42,7 +42,7 @@ info.onAdd = function (map) {
 
 info.update = function (props) {
 	this._div.innerHTML = '<h4>Mortalidad</h4>' + (props ?
-	'<b>'+props.name + '</b></br>' + 'AlgunNumero' + ' % por persona' : 'Indique un pais');
+	'<b>'+props.name + '</b></br>' + (props.mort ? (props.mort + '% x 1000 Personas') : "No hay datos" )  : 'Indique un pais');
 };
 
 function highlightFeature(e) {
@@ -99,12 +99,14 @@ function loadPais(pais,dataPais){
 		}();
 	dataPais = dataPais.slice(0,-1);
 	var colorPais = parseInt(dataPais);
+	geoPais["features"][0].properties.mort = dataPais;
 	if (colorPais > 8) {
-		colorPais = 8
+		colorPais = 8;
 	}
 	else if (isNaN(colorPais))
 	{
 		colorPais = 9;
+		geoPais["features"][0].properties.mort = null;
 	}
 	var stylePais =
 	{
