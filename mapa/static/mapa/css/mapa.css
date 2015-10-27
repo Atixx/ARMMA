@@ -53,3 +53,22 @@ body
 .modal-content {
   background-color: #414141;
 }
+
+#loadingModal {
+    display:    none;
+    position:   absolute;
+    margin:     auto;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     66px;
+    width:      66px;
+    background: rgba( 255, 255, 255, .0 )
+                url('images/ajax-loader.gif')
+                50% 50%
+                no-repeat;
+}
+
+body.loading #loadingModal {
+    display: block;
+}
