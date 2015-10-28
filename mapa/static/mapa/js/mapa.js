@@ -42,7 +42,8 @@ info.onAdd = function (map) {
 
 info.update = function (props) {
 	this._div.innerHTML = '<h4>Mortalidad</h4>' + (props ?
-	'<b>'+props.name + '</b></br>' + (props.mort ? (props.mort + '% x 1000 Personas') : "No hay datos" )  : 'Indique un pais');
+	'<b>'+props.name + '</b></br> ' + '<img src="../static/mapa/css/images/48/'+props.name+'.png" height="48" width="48"></br>' + (props.mort ?
+		('<span id="numMort">'+props.mort+'</span>' + '% x 1000 Personas') : "No hay datos" )  : 'Indique un pais');
 };
 
 function highlightFeature(e) {
@@ -176,7 +177,7 @@ legend.onAdd = function (map) {
 
 function initmap() {
 	// set up the map
-	map = new L.Map('map');
+	map = new L.Map('map', {scrollWheelZoom: false, touchZoom: false});
 
 	// create the tile layer with correct attribution
 	//var osmUrl='http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
@@ -185,7 +186,7 @@ function initmap() {
 	//var osmAttrib='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
 	var localAttrib = 'Copyright &#169; Bascuñan Sebastián, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015, Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús.'
   var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'+localAttrib;
-	var osm = new L.TileLayer(osmUrl, {minZoom: 2, maxZoom: 5, attribution: osmAttrib});
+	var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 4, attribution: osmAttrib});
 
 	map.setView(new L.LatLng(10, 0),3);
 	map.addLayer(osm);
