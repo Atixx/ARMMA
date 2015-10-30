@@ -179,7 +179,6 @@ function initmap() {
 	// set up the map
 	map = new L.Map('map', {
 		scrollWheelZoom: false,
-		touchZoom: false,
 		bounceAtZoomLimits: true,
 		maxBounds : [
 			[-60, -180],
