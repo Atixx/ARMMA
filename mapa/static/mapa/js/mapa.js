@@ -177,7 +177,15 @@ legend.onAdd = function (map) {
 
 function initmap() {
 	// set up the map
-	map = new L.Map('map', {scrollWheelZoom: false, touchZoom: false});
+	map = new L.Map('map', {
+		scrollWheelZoom: false,
+		touchZoom: false,
+		bounceAtZoomLimits: true,
+		maxBounds : [
+			[-60, -180],
+			[80, 200]
+		],
+		maxBoundsViscosity: 0.2});
 
 	// create the tile layer with correct attribution
 	//var osmUrl='http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png';
@@ -187,7 +195,6 @@ function initmap() {
 	var localAttrib = 'Copyright &#169; Bascuñan Sebastián, Colombo Maximiliano, Irione Araceli, Levy Maor. 2015, Proyecto Software, Licenciatura en Sistemas. Universidad Nacional de Lanús.'
   var osmAttrib = 'Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.'+localAttrib;
 	var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 4, attribution: osmAttrib});
-
 	map.setView(new L.LatLng(10, 0),3);
 	map.addLayer(osm);
 	legend.addTo(map);
