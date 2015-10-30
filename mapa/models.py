@@ -62,7 +62,7 @@ class Mort(models.Model):
     class Meta:
         managed = True
         db_table = 'mort'
-
+        index_together = [["year","country", "admin1","cause","sex"],]
 
 class Pop(models.Model):
     country = models.IntegerField(db_column='Country')  # Field name made lowercase.
