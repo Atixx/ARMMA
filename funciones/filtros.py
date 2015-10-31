@@ -17,7 +17,7 @@ def xPais(pais, anio, sexo, causaIni, causaFin, edades):
     if anioPop:
         if causaFin == None:
             if (int(sexo) != 0):
-                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause=causaIni).filter(sex=sexo).filter(admin1=0)
+                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause=causaIni).filter(sex=sexo)
                 poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(sex=sexo)
             else:
                 query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause=causaIni)
