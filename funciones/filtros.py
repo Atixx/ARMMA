@@ -18,17 +18,17 @@ def xPais(pais, anio, sexo, causaIni, causaFin, edades):
         if causaFin == None:
             if (int(sexo) != 0):
                 query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause=causaIni).filter(sex=sexo).filter(admin1=0)
-                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(sex=sexo).filter(admin1=0)
+                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(sex=sexo)
             else:
-                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause=causaIni).filter(admin1=0)
-                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(admin1=0)
+                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause=causaIni)
+                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop)
         else:
             if (int(sexo) != 0):
-                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause__range=(causaIni, causaFin)).filter(sex=sexo).exclude(cause='AAA').filter(admin1=0)
-                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(sex=sexo).filter(admin1=0)
+                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause__range=(causaIni, causaFin)).filter(sex=sexo).exclude(cause='AAA')
+                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(sex=sexo)
             else:
-                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause__range=(causaIni, causaFin)).exclude(cause='AAA').filter(admin1=0)
-                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop).filter(admin1=0)
+                query = Mort.objects.filter(country=pais.country).filter(year = anio).filter(cause__range=(causaIni, causaFin)).exclude(cause='AAA')
+                poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop)
             poblacion = Pop.objects.filter(country=pais.country).filter(year = anioPop)
         for l in formatoEdades(int(edades)):
             find = 'deaths'+l
