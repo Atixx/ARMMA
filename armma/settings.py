@@ -79,9 +79,12 @@ WSGI_APPLICATION = 'armma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ARMMA',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        # 'NAME': 'ARMMA',
+        'NAME': 'ps_armma2015',
+        # 'USER': 'root',
+        'USER': 'armma2015',
+        # 'PASSWORD': 'root',
+        'PASSWORD': 's51d21f82',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
