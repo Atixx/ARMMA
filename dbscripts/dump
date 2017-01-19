@@ -1,0 +1,25 @@
+#! /usr/bin/python
+
+# Script para crear 20 archivos a partir de la tabla llamada
+# 'mort' en la base de datos con el nombre 'ps_armma2015'
+# Los archivos a crear se llamaran mortdump(1-20)
+#
+#
+
+import subprocess, zipfile
+
+base = 'mortdump'
+jump = 150000
+bot = 0
+top = jump
+for i in range(1,21):
+    name = base+str(i)
+    f = open(name, "w")
+    subprocess.call(["mysqldump", "-uroot", "-proot", "--skip-add-locks", "--no-create-db", "--no-create-info", '--where=id between '+str(bot)+' and '+str(top), "ps_armma2015", "mort"], stdout=f)
+    # print "bot is: "+str(bot)
+    # print "top is: "+str(top)
+    bot = top+1
+    top = top+jump
+    #subprocess.call(["zip", "-9", "-ozip"+str(i),name])
+# mysqldump -u root -proot --skip-add-locks --no-create-db --no-create-info --where=" id between 0 and 1000" ps_armma2015 mort > morttest.sql
+#zip -9 -o zip1 name

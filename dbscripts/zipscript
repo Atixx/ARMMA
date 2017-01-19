@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Script para zipear los archivos creaddos a partir del script 'dump'
+# se deberia correr en un directorio en el cual se encuentra un directorio
+# con unicamente los 20 archivos a zipear con el nombre 'mort'
+# los zips se crearan en otro directorio llamado zips con cada archivo
+# teniendo el nombre Z[nombreDelArchivo](1-20)
+for i in $( ls mort/ ); do
+    #echo $i
+    zip -9 -o zips/Z$i mort/$i
+done
+
+#zip -9 -o zip1 name
