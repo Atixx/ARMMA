@@ -124,15 +124,22 @@ function loadPais(pais,dataPais){
 
 }
 
-function ajaxLoad(paises) {
+function ajaxLoad(paises, toExport) {
+		if (toExport) {
+				var f = function(data){
+					console.log("Pais: "+paises+" Data: "+data); //TODO Llamar aca a la funcion que crea el objeto a exportar
+				}
+		}
+		else {
+				var f = function (data){
+				loadPais(paises, data)
+			};
+		}
 		$.ajax(
 		{
 			'async' :true,
 			'url': "data/"+paises.toString()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$("[name=sex]:checked").val()+"/"+$('#edades').val(),
-			'success': function (data) {
-				loadPais(paises, data)
-			}
-
+			'success': f
 		});
 }
 
@@ -158,6 +165,13 @@ infoButton.onAdd = function(map) {
 	return button;
 };
 */
+var printButton = L.control({position : 'topleft'});
+printButton.onAdd = function(map) {
+	var button = L.DomUtil.create('div');
+	button.innerHTML = '<button type="button" class="btn btn-warning" onClick="imprimir()"> <span class="glyphicon glyphicon-print"> </button>';
+	return button;
+};
+
 var infoButton = L.control({position : 'topleft'});
 infoButton.onAdd = function(map) {
 	var div = L.DomUtil.create('div');
@@ -198,6 +212,7 @@ function initmap() {
 	map.addLayer(osm);
 	legend.addTo(map);
 	menuButton.addTo(map);
+  printButton.addTo(map);
 	infoButton.addTo(map);
 }
 
@@ -209,9 +224,21 @@ $(document).ready(function() {
 		initmap();
 		info.addTo(map);
 		for (var i = 0; i < paisesArray.length; i++){
-			ajaxLoad(paisesArray[i]);
+			ajaxLoad(paisesArray[i], false);
 		}
 	});
+
+	function exportLoad(paises){
+
+	};
+
+	$('#export').click(function(){ //TODO (4/2/17): crear el XML para exportar
+		// alert("Aca va a exportar");
+		for (var i = 0; i < paisesArray.length; i++){
+			ajaxLoad(paisesArray[i], true);
+		}
+	});
+
 	var jPM = $.jPanelMenu({
     menu: '#menu',
     trigger: '.trigger',
@@ -227,3 +254,10 @@ $(document).on({
      ajaxStart: function() { $('body').addClass("loading");},
      ajaxStop: function() { $('body').removeClass("loading");}
 });
+
+function imprimir() {
+	$('button').hide();
+	window.print();
+	$('button').show();
+
+};
