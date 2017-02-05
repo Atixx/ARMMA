@@ -124,22 +124,14 @@ function loadPais(pais,dataPais){
 
 }
 
-function ajaxLoad(paises, toExport) {
-		if (toExport) {
-				var f = function(data){
-					console.log("Pais: "+paises+" Data: "+data); //TODO Llamar aca a la funcion que crea el objeto a exportar
-				}
-		}
-		else {
-				var f = function (data){
-				loadPais(paises, data)
-			};
-		}
+function ajaxLoad(paises) {
 		$.ajax(
 		{
 			'async' :true,
 			'url': "data/"+paises.toString()+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$("[name=sex]:checked").val()+"/"+$('#edades').val(),
-			'success': f
+			'success': function (data){
+				loadPais(paises, data)
+				}
 		});
 }
 
@@ -224,19 +216,13 @@ $(document).ready(function() {
 		initmap();
 		info.addTo(map);
 		for (var i = 0; i < paisesArray.length; i++){
-			ajaxLoad(paisesArray[i], false);
+			ajaxLoad(paisesArray[i]);
 		}
 	});
 
-	function exportLoad(paises){
-
-	};
 
 	$('#export').click(function(){ //TODO (4/2/17): crear el XML para exportar
-		// alert("Aca va a exportar");
-		for (var i = 0; i < paisesArray.length; i++){
-			ajaxLoad(paisesArray[i], true);
-		}
+		alert("Aca va a exportar");
 	});
 
 	var jPM = $.jPanelMenu({
