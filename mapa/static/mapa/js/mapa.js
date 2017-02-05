@@ -224,6 +224,7 @@ $(document).ready(function() {
 	$('#export').click(function(){ //TODO (4/2/17): crear el XML para exportar
 		// alert("Aca va a exportar");
 		var dataObj = {};
+		var fileXML = '<?xml version="1.0"?>\n';
 		for (var i = 0; i < paisesArray.length; i++){
 			// console.log(paisesJson[paisesArray[i]]);
 			$.ajax(
@@ -235,7 +236,61 @@ $(document).ready(function() {
 					}
 			});
 		}
-		 console.log(dataObj);
+		//  console.log(dataObj);
+		// download(dataObj);
+		fileXML += "<anio>"+$('#year').val();
+		fileXML += "\t<causa>"+$('#cause').val();
+		fileXML += "\t\t<sexo>"
+		if ($("[name=sex]:checked").val() == 1) { //Masculino
+			fileXML +="Masculino";
+		}
+		else if ($("[name=sex]:checked").val() == 2) { //Femenino
+			fileXML +="Femenino";
+		}
+		else { //Indistinto
+				fileXML +="Indistinto";
+		}
+		fileXML +="\t\t\t<edades>"
+		switch($('#edades').val()) {
+			case 0:
+					fileXML +="Todas las Edades";
+					break;
+			case 1:
+					fileXML +="1-4";
+					break;
+			case 2:
+					fileXML +="5-14";
+					break;
+			case 3:
+					fileXML +="15-24";
+					break;
+			case 4:
+					fileXML +="25-34";
+					break;
+			case 5:
+					fileXML +="35-44";
+					break;
+			case 6:
+					fileXML +="45-54";
+					break;
+			case 7:
+					fileXML +="55-64";
+					break;
+			case 8:
+					fileXML +="65+";
+					break;
+		}
+		for (p in dataObj){
+			fileXML +='\t\t\t\t<pais id="'+p+'">\n';
+			fileXML +="\t\t\t\t\t<mortalidad>\n\t\t\t\t\t\t"+dataObj[p]+"\t\t\t\t\t</mortalidad>\n";
+			fileXML +="\t\t\t\t</pais>\n";
+		}
+		fileXML +="\t\t\t</edades>\n";
+		fileXML +="\t\t</sexo>\n";
+		fileXML +="\t</causa>\n";
+		fileXML +="</anio>\n";
+		// console.log(fileXML);
+		download(fileXML, $('#year').val()+$('#cause').val()+$("[name=sex]:checked").val()+$('#edades').val()+".xml" , "xml");
 	});
 
 	var jPM = $.jPanelMenu({
@@ -260,3 +315,21 @@ function imprimir() {
 	$('button').show();
 
 };
+
+function download(data, filename, type) {
+    var a = document.createElement("a"),
+        file = new Blob([data], {type: type});
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function() {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+}
