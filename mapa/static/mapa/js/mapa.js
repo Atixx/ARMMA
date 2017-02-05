@@ -222,7 +222,20 @@ $(document).ready(function() {
 
 
 	$('#export').click(function(){ //TODO (4/2/17): crear el XML para exportar
-		alert("Aca va a exportar");
+		// alert("Aca va a exportar");
+		var dataObj = {};
+		for (var i = 0; i < paisesArray.length; i++){
+			// console.log(paisesJson[paisesArray[i]]);
+			$.ajax(
+			{
+				'async' :false,
+				'url': "data/"+paisesArray[i]+"/"+$('#year').val()+"/"+$('#cause').val()+"/"+$("[name=sex]:checked").val()+"/"+$('#edades').val(),
+				'success': function (data){
+					dataObj[paisesJson[paisesArray[i]]] = data;
+					}
+			});
+		}
+		 console.log(dataObj);
 	});
 
 	var jPM = $.jPanelMenu({
