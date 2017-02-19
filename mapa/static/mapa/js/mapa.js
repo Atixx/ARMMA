@@ -290,7 +290,11 @@ $(document).ready(function() {
 		fileXML +="\t</causa>\n";
 		fileXML +="</anio>\n";
 		// console.log(fileXML);
+<<<<<<< HEAD
 		download(fileXML, $('#year').val()+$('#cause').val()+$("[name=sex]:checked").val()+$('#edades').val()+".xml" , "xml");
+=======
+		download(fileXML, $('#year').val()+$('#cause').val()+$("[name=sex]:checked").val()+$('#edades').val() , "xml");
+>>>>>>> 31d98c2dbf51d0fee24ef91f61c8f4f671c2b223
 	});
 
 	var jPM = $.jPanelMenu({
