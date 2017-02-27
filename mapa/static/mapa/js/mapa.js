@@ -311,8 +311,10 @@ $(document).on({
 
 function imprimir() {
 	$('button').hide();
+	$('.legend').hide();
 	window.print();
 	$('button').show();
+	$('.legend').show();
 
 };
 
