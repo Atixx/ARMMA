@@ -221,12 +221,10 @@ $(document).ready(function() {
 	});
 
 
-	$('#export').click(function(){ //TODO (4/2/17): crear el XML para exportar
-		// alert("Aca va a exportar");
+	$('#export').click(function(){
 		var dataObj = {};
 		var fileXML = '<?xml version="1.0"?>\n';
 		for (var i = 0; i < paisesArray.length; i++){
-			// console.log(paisesJson[paisesArray[i]]);
 			$.ajax(
 			{
 				'async' :false,
@@ -297,8 +295,8 @@ $(document).ready(function() {
     menu: '#menu',
     trigger: '.trigger',
 		clone: false,
-		excludedPanelContent: ".modal"
-		//openPosition: '35%' //TODO:Queda para configurar el font en CSS, y una vez completado verificar denuevo esto
+		excludedPanelContent: ".modal",
+		openPosition: '50%'
 	});
 	jPM.on();
 	initmap();

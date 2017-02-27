@@ -35,7 +35,7 @@
   </div>
 </br>
   <div class='row'>
-    <div class='col-md-4'>
+    <div class='col-md-6'>
       Genero:
       <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-primary active">
@@ -53,8 +53,8 @@
 </br>
   <div class='row'>
     <div class='col-md-4'>
-      Causa:
-      <select id="cause" class="selectpicker" data-style='btn-danger' data-size="6" data-height="2"> <!-- Dropdown -->
+      Causa: <br>
+      <select id="cause" class="selectpicker" data-style='btn-danger' data-size="6" data-height="2" data-width="500px"> <!-- Dropdown -->
         <option value="0">Todas las causas</option>
         {% for c in causas%}
         <option value="{{c.id}}">{{c.CauseDescription}}</option>
@@ -160,7 +160,6 @@
           </div>
         </div>
       </div>
-
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingFive">
           <h4 class="panel-title">
@@ -178,10 +177,6 @@
           </div>
         </div>
       </div>
-
-
-
-
       </div>
         <h6>Iconos de las banderas creado por <a href="http://www.icondrawer.com" target="_blank">IconDrawer</a></h6>
       </div>
