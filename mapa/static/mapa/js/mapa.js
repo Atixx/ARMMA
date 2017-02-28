@@ -296,7 +296,7 @@ $(document).ready(function() {
     trigger: '.trigger',
 		clone: false,
 		excludedPanelContent: ".modal",
-		openPosition: '50%'
+		openPosition: '75%'
 	});
 	jPM.on();
 	initmap();

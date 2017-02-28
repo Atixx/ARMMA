@@ -76,3 +76,7 @@ body.loading #loadingModal {
 #numMort {
   font-weight: bold;
 }
+
+.collapse span {
+  font-weight: bold;
+}
